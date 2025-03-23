@@ -1,0 +1,15 @@
+.alternative {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.alternative h2 {
+  font-size: x-large;
+  padding-bottom: 10px;
+}
+
+.alternative p {
+  font-size: large;
+  font-weight: 600;
+}
