@@ -109,7 +109,9 @@ const Authentication = () => {
       <ErrorModal error={error} onClear={errorHandler} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
-        <h2 className="authentication__header">LOGIN Required</h2>
+        <h2 className="authentication__header">
+          {isLoginMode ? "LOGIN" : "SIGNUP"} Required
+        </h2>
         <hr />
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (

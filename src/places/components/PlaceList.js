@@ -29,6 +29,7 @@ const PlaceList = ({ items, onDeletePlace }) => {
           creator={place.creator}
           coordinates={place.location}
           onDelete={onDeletePlace}
+          likes={place.likes}
         />
       ))}
     </ul>

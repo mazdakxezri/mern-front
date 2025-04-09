@@ -9,3 +9,5 @@
 ## explanation
 
 --> I write the Map component but it dosen't work cuse of needs to credit card
+
+--> For fixing style add "!important" to PlaceItem.css/.place-item\_\_content

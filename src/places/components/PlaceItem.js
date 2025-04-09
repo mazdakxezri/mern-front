@@ -10,6 +10,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/Hooks/http-hook";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import LikePlace from "./LikePlace";
 
 const PlaceItem = ({
   image,
@@ -20,10 +21,10 @@ const PlaceItem = ({
   coordinates,
   creator,
   onDelete,
+  likes,
 }) => {
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, errorHandler } = useHttpClient();
-
   const [showConfirm, setShowConfirm] = useState(false);
   const [showMap, setShowMap] = useState(false);
 
@@ -122,6 +123,7 @@ const PlaceItem = ({
                 </Button>
               </>
             )}
+            <LikePlace placeId={id} currentLikes={likes} />
           </div>
         </Card>
       </li>
