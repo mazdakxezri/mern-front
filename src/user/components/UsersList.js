@@ -8,25 +8,28 @@ const UsersList = ({ users }) => {
   if (users.length === 0) {
     return (
       <div className="center">
-        <Card>
-          <h2>No Users Found.</h2>
+        <Card className="users-list__empty">
+          <h2>No Users Found</h2>
+          <p>Be the first to share your favorite places!</p>
         </Card>
       </div>
     );
   }
 
   return (
-    <ul className="users-list">
-      {users.map((user) => (
-        <UserItem
-          key={user.id}
-          id={user.id}
-          image={user.image}
-          name={user.name}
-          placeCount={user.places.length}
-        />
-      ))}
-    </ul>
+    <div className="users-list__container">
+      <ul className="users-list">
+        {users.map((user) => (
+          <UserItem
+            key={user.id}
+            id={user.id}
+            image={user.image}
+            name={user.name}
+            placeCount={user.places.length}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { useHttpClient } from "../../shared/Hooks/http-hook";
-import "./PlaceForm.css";
+import "./NewPlace.css";
 import Input from "../../shared/components/FormElements/Input";
 import {
   VALIDATOR_MINLENGTH,
@@ -68,45 +68,69 @@ const NewPlace = () => {
   };
 
   return (
-    <>
+    <div className="new-place-page">
+      <div className="new-place-page__overlay"></div>
       <ErrorModal error={error} onClear={errorHandler} />
-      <form className="place-form" onSubmit={placeSubmitHandler}>
-        {isLoading && <LoadingSpinner asOverlay />}
-        <Input
-          id="title"
-          element="input"
-          type="text"
-          label="Title"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid title."
-          onInput={inputHandler}
-        />
-        <Input
-          id="description"
-          element="textarea"
-          label="Description"
-          validators={[VALIDATOR_MINLENGTH(6)]}
-          errorText="Please enter a valid description (at least 6 characters)."
-          onInput={inputHandler}
-        />
-        <Input
-          id="address"
-          element="input"
-          label="Address"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid address."
-          onInput={inputHandler}
-        />
-        <ImageUpload
-          id="image"
-          onInput={inputHandler}
-          errorText="Please provide an image"
-        />
-        <Button type="submit" disabled={!formState.isValid}>
-          ADD PLACE
-        </Button>
-      </form>
-    </>
+      <div className="new-place-page__content">
+        <div className="new-place-page__header">
+          <h1 className="new-place-page__title">Share Your Place</h1>
+          <p className="new-place-page__subtitle">Tell us about your favorite location</p>
+        </div>
+        
+        <form className="new-place-form" onSubmit={placeSubmitHandler}>
+          {isLoading && <LoadingSpinner asOverlay />}
+          
+          <div className="new-place-form__group">
+            <Input
+              id="title"
+              element="input"
+              type="text"
+              label="Title"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Please enter a valid title."
+              onInput={inputHandler}
+              icon="📝"
+            />
+          </div>
+
+          <div className="new-place-form__group">
+            <Input
+              id="description"
+              element="textarea"
+              label="Description"
+              validators={[VALIDATOR_MINLENGTH(6)]}
+              errorText="Please enter a valid description (at least 6 characters)."
+              onInput={inputHandler}
+              icon="📄"
+            />
+          </div>
+
+          <div className="new-place-form__group">
+            <Input
+              id="address"
+              element="input"
+              label="Address"
+              validators={[VALIDATOR_REQUIRE()]}
+              errorText="Please enter a valid address."
+              onInput={inputHandler}
+              icon="📍"
+            />
+          </div>
+
+          <div className="new-place-form__group">
+            <ImageUpload
+              id="image"
+              onInput={inputHandler}
+              errorText="Please provide an image"
+            />
+          </div>
+
+          <Button type="submit" disabled={!formState.isValid}>
+            Share Place
+          </Button>
+        </form>
+      </div>
+    </div>
   );
 };
 

@@ -21,20 +21,20 @@ export const useHttpClient = () => {
           signal: httpAbortCtrl.signal,
         });
 
-        const data = await response.json();
+        const responseData = await response.json();
 
         activeHttpRequests.current = activeHttpRequests.current.filter(
           (reqCtrl) => reqCtrl !== httpAbortCtrl
         );
 
         if (!response.ok) {
-          throw new Error(data.message);
+          throw new Error(responseData.message || 'Something went wrong');
         }
 
         setIsLoading(false);
-        return data;
+        return responseData;
       } catch (error) {
-        setError(error.message);
+        setError(error.message || 'Something went wrong');
         setIsLoading(false);
         throw error;
       }

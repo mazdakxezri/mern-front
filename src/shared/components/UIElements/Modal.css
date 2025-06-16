@@ -4,6 +4,7 @@
   top: 22vh;
   left: 10%;
   width: 80%;
+  max-width: 40rem;
   background: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
@@ -11,7 +12,7 @@
 
 .modal__header {
   width: 100%;
-  padding: 1rem 0.5rem;
+  padding: 1rem;
   background: #2a006e;
   color: white;
 }
@@ -21,17 +22,31 @@
 }
 
 .modal__content {
-  padding: 1rem 0.5rem;
+  padding: 1rem;
 }
 
 .modal__footer {
-  padding: 1rem 0.5rem;
+  padding: 1rem;
 }
 
 @media (min-width: 768px) {
   .modal {
     left: calc(50% - 20rem);
     width: 40rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    width: 95%;
+    left: 2.5%;
+    top: 15vh;
+  }
+  
+  .modal__header,
+  .modal__content,
+  .modal__footer {
+    padding: 0.75rem;
   }
 }
 

@@ -18,7 +18,6 @@ import "./Auth.css";
 
 const Authentication = () => {
   const auth = useContext(AuthContext);
-
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { isLoading, error, sendRequest, errorHandler } = useHttpClient();
 
@@ -62,7 +61,6 @@ const Authentication = () => {
         false
       );
     }
-
     setIsLoginMode((prevMode) => !prevMode);
   };
 
@@ -82,13 +80,11 @@ const Authentication = () => {
             "Content-Type": "application/json",
           }
         );
-
         auth.login(data.userId, data.token);
       } catch (error) {}
     } else {
       try {
         const formData = new FormData();
-
         formData.append("email", formState.inputs.email.value);
         formData.append("name", formState.inputs.name.value);
         formData.append("password", formState.inputs.password.value);
@@ -105,14 +101,19 @@ const Authentication = () => {
   };
 
   return (
-    <>
+    <div className="auth-page">
+      <div className="auth-page__overlay"></div>
       <ErrorModal error={error} onClear={errorHandler} />
       <Card className="authentication">
         {isLoading && <LoadingSpinner asOverlay />}
         <h2 className="authentication__header">
-          {isLoginMode ? "LOGIN" : "SIGNUP"} Required
+          {isLoginMode ? "Welcome Back!" : "Create Account"}
         </h2>
-        <hr />
+        <p className="authentication__subtitle">
+          {isLoginMode
+            ? "Please login to your account"
+            : "Join our community of travelers"}
+        </p>
         <form onSubmit={authSubmitHandler}>
           {!isLoginMode && (
             <Input
@@ -123,6 +124,7 @@ const Authentication = () => {
               errorText="Please enter a name."
               validators={[VALIDATOR_REQUIRE()]}
               onInput={inputHandler}
+              icon="👤"
             />
           )}
           {!isLoginMode && (
@@ -141,6 +143,7 @@ const Authentication = () => {
             validators={[VALIDATOR_EMAIL()]}
             errorText="Please enter a valid email address."
             onInput={inputHandler}
+            icon="✉️"
           />
           <Input
             id="password"
@@ -150,17 +153,18 @@ const Authentication = () => {
             validators={[VALIDATOR_MINLENGTH(6)]}
             errorText="Please enter a valid password, at least 6 characters."
             onInput={inputHandler}
+            icon="🔒"
           />
           <Button type="submit" disabled={!formState.isValid}>
-            {isLoginMode ? "LOGIN" : "SINGUP"}
+            {isLoginMode ? "Login" : "Sign Up"}
           </Button>
         </form>
 
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? "SINGUP" : "LOGIN"}
+          {isLoginMode ? "Need an account? Sign Up" : "Already have an account? Login"}
         </Button>
       </Card>
-    </>
+    </div>
   );
 };
 

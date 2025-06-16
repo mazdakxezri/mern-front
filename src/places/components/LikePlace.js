@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import Button from "../../shared/components/FormElements/Button";
 
@@ -14,34 +14,26 @@ const LikePlace = ({ placeId, currentLikes }) => {
 
   const { isLoading, error, sendRequest, errorHandler } = useHttpClient();
 
-  let toggleLike;
-  useEffect(() => {
-    let toggleLike = async () => {
-      try {
-        const response = await sendRequest(
-          process.env.REACT_APP_BACKEND_URL + `/places/${placeId}`,
-          "PATCH",
-          JSON.stringify({
-            action: isLiked ? "unlike" : "like",
-          }),
-          {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          }
-        );
-        const data = await response.json();
-        setLikes(data.likes);
-      } catch (err) {
-        console.error("Failed to toggle like:", err);
-      }
-    };
-    toggleLike();
-  }, [sendRequest, placeId, isLiked, token]);
+  const toggleLike = async () => {
+    try {
+      const responseData = await sendRequest(
+        process.env.REACT_APP_BACKEND_URL + `/places/${placeId}/like`,
+        "PATCH",
+        null,
+        {
+          Authorization: `Bearer ${token}`,
+        }
+      );
+      setLikes(responseData.likes);
+    } catch (err) {
+      console.error("Failed to toggle like:", err);
+    }
+  };
 
   return (
     <>
       <ErrorModal error={error} onClear={errorHandler} />
-      <Button inverse onClick={toggleLike}>
+      <Button inverse onClick={toggleLike} disabled={isLoading}>
         {isLoading && <LoadingSpinner asOverlay />}
         {isLiked ? "❤️ Unlike" : "🤍 Like"} ({likes.length})
       </Button>

@@ -12,7 +12,7 @@ const UserItem = ({ image, name, placeCount, id }) => {
         <Link to={`/${id}/places`}>
           <div className="user-item__image">
             <Avatar
-              image={process.env.REACT_APP_ASSET_URL + `/${image}`}
+              image={image || `${process.env.REACT_APP_BACKEND_URL}/uploads/users/default.png`}
               alt={name}
             />
           </div>
@@ -21,6 +21,7 @@ const UserItem = ({ image, name, placeCount, id }) => {
             <h3>
               {placeCount} {placeCount === 1 ? "Place" : "Places"}
             </h3>
+            <span className="user-item__view">View Places →</span>
           </div>
         </Link>
       </Card>

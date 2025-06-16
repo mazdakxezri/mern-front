@@ -3,10 +3,18 @@ import React, { useEffect, useRef, useState } from "react";
 import "./ImageUpload.css";
 import Button from "./Button";
 
+const MIME_TYPE_MAP = {
+  "image/png": "png",
+  "image/jpg": "jpg",
+  "image/jpeg": "jpeg",
+};
+
+const MAX_FILE_SIZE = 500000; // 500KB
+
 const ImageUpload = ({ id, center, onInput, errorText }) => {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState();
-  const [isValid, setIsValid] = useState();
+  const [isValid, setIsValid] = useState(false);
   const filePickerRef = useRef();
 
   useEffect(() => {
@@ -24,9 +32,24 @@ const ImageUpload = ({ id, center, onInput, errorText }) => {
 
   const pickedImageHandler = (event) => {
     let pickedFile;
-    let fileIsValid = isValid;
+    let fileIsValid = false;
+    
     if (event.target.files && event.target.files.length === 1) {
       pickedFile = event.target.files[0];
+      
+      // Check file type
+      if (!MIME_TYPE_MAP[pickedFile.type]) {
+        setIsValid(false);
+        onInput(id, null, false);
+        return;
+      }
+      
+      // Check file size
+      if (pickedFile.size > MAX_FILE_SIZE) {
+        setIsValid(false);
+        onInput(id, null, false);
+        return;
+      }
 
       setFile(pickedFile);
       setIsValid(true);
